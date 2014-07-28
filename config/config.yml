@@ -13,6 +13,9 @@ defaults: &execution_defaults
     ajax_timeout: 10
     front_timeout: 30
     back_timeout: 30
+    # SauceLabs credentials
+    sauce_user: sauce_username
+    sauce_akey: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
 
 ##############################
 ###     Configurations     ###
