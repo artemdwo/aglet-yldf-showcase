@@ -1,4 +1,3 @@
-# noinspection RubyResolve
 class Helpers::Config
   include Singleton
   attr_reader :env_config
