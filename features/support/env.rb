@@ -17,6 +17,11 @@ require './ext/timer'
 require 'capybara/iphone'
 require 'capybara/user_agent'
 
+require "sauce"
+require "sauce/capybara"
+require "capybara/rspec"
+require "sauce/cucumber"
+
 # Sets the Timezone
 Time.zone = 'Europe/London'
 
@@ -26,7 +31,12 @@ ActiveSupport::Dependencies.autoload_paths << File.expand_path(File.join(Dir.pwd
 
 # Setup config for Browser
 Capybara.configure do |config|
-  config.default_driver = :selenium_chrome
+  if ENV['BROWSER'] != nil and Capybara.drivers.keys.include? ENV['BROWSER'].to_sym
+    browser = ENV['BROWSER'].to_sym
+  else
+    browser = :selenium_chrome
+  end
+  config.default_driver = browser
   config.run_server = false
   config.default_selector = :css
   config.default_wait_time = Helpers::Config['default_wait_time']
@@ -52,8 +62,36 @@ Capybara.register_driver :selenium_safari do |app|
   Capybara::Selenium::Driver.new(app, :browser => :safari)
 end
 
+# Registers driver for Sauce Labs remote hub
+Capybara.register_driver :sauce do |app|
+  Capybara::Selenium::Driver.new(app,
+                                 :browser => :remote,
+                                 :desired_capabilities => sauce_capabilities,
+                                 :url => sauce_url
+  )
+end
+
+# TODO: move configuration parts into separate config file
+# Capabilities for Sauce Labs service
+def sauce_capabilities
+  {
+      :username => Helpers::Config['sauce_user'],
+      :accessKey => Helpers::Config['sauce_akey'],
+      :screenResolution => '1280x1024',
+      :platform => 'OS X 10.6',
+      :browserName => 'chrome',
+      :browserVersion => '35',
+      :jobName => 'New job'
+  }
+end
+
 # Registers driver for iPhone browser
 #TODO: support of iPhone browser by using either http://appium.io/ or http://ios-driver.github.io/ios-driver/
+
+# Defines Sauce Labs Grid\HUB URL with the credentials from config.yml
+def sauce_url
+  'http://'+Helpers::Config['sauce_user']+':'+Helpers::Config['sauce_akey']+'@ondemand.saucelabs.com:80/wd/hub'
+end
 
 World(Capybara)
 World(Laces)
