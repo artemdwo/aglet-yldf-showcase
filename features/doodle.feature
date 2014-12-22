@@ -1,4 +1,4 @@
-@google @doodle
+@google @doodle @complete @smoke
 Feature: Google Doodle
 
   @search
