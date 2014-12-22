@@ -39,6 +39,7 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (6.0.0)
+    awesome_print (1.2.0)
     builder (3.2.2)
     capybara (2.4.4)
       mime-types (>= 1.16)
@@ -194,6 +195,7 @@ PLATFORMS
 
 DEPENDENCIES
   activesupport (~> 4.2)
+  awesome_print
   capybara (~> 2.4)
   capybara-iphone (~> 0.2.0)
   capybara-user_agent (~> 0.0.3)
@@ -201,9 +203,9 @@ DEPENDENCIES
   cucumber-rails
   facter (~> 2.3)
   headless (~> 1.0)
-  parallel_tests
+  parallel_tests (~> 1.0)
   rake (~> 10.4)
-  rspec (~> 3.1)
+  rspec
   sauce (~> 3.5)
   sauce-connect
   sauce-cucumber
