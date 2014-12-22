@@ -1,0 +1,20 @@
+# Var Suites to exec
+complete: -f pretty -t @complete -t ~@not_implemented -t ~@failing
+failing: -f pretty -t @complete -t @failing
+complete_no_failing: -f pretty -t @complete -t ~@failing
+specific: -f pretty --tags <%= ENV['TAGS'] %>
+smoke: -f pretty --tags @smoke -t ~@failing
+feature: -f pretty -t @complete -t ~@failing  -t <%= ENV['TAGS'] %>
+smoke_live: -f pretty --tags @smoke_live
+
+# CI Complete Suite Exec
+## Passing
+jenkins_complete_passing: -q -f pretty -t @complete -t ~@not_implemented -t ~@failing -t ~@problematic -f json -o <%= ENV['JSON_OUTPUT'] %> -f junit -o <%= ENV['JUNIT_OUTPUT'] %>
+## Failing
+jenkins_complete_failing: -q -f pretty -t @complete -t @failing -f json -o <%= ENV['JSON_OUTPUT'] %> -f junit -o <%= ENV['JUNIT_OUTPUT'] %>
+
+# CI Smoke Suite Exec
+## Test
+jenkins_smoke: -q -f pretty -t @smoke -f json -o <%= ENV['JSON_OUTPUT'] %> -f junit -o <%= ENV['JUNIT_OUTPUT'] %>
+## Live
+jenkins_smoke_live: -q -f pretty -t @smoke_live -f json -o <%= ENV['JSON_OUTPUT'] %> -f junit -o <%= ENV['JUNIT_OUTPUT'] %>
