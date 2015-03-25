@@ -85,13 +85,54 @@ def sauce_capabilities
   }
 end
 
-# Registers driver for iPhone browser
-#TODO: support of iPhone browser by using either http://appium.io/ or http://ios-driver.github.io/ios-driver/
-
 # Defines Sauce Labs Grid\HUB URL with the credentials from config.yml
 def sauce_url
   'http://'+Helpers::Config['sauce_user']+':'+Helpers::Config['sauce_akey']+'@ondemand.saucelabs.com:80/wd/hub'
 end
+
+# Registers driver for Browser Stack remote hub
+Capybara.register_driver :browstack do |app|
+  Capybara::Selenium::Driver.new(app,
+                                 :browser => :remote,
+                                 :desired_capabilities => browstack_capabilities,
+                                 :url => browstack_url
+  )
+end
+
+# TODO: move configuration parts into separate config file
+# Capabilities for Browser Stack service
+def browstack_capabilities
+  {
+      # Desktop emulation Win+IE
+      :browser => 'IE',
+      :browser_version => '7.0',
+      :os => 'Windows',
+      :os_version => 'XP',
+
+      # Desktop emulation MacOS+Chrome
+      # :browser => 'Chrome',
+      # :browser_version => '35',
+      # :os => 'OS X',
+      # :os_version => 'Mountain Lion',
+      # :os_version => 'Snow Leopard',
+
+      # Mobile Devices
+      # :os => 'ios',
+      # :os_version => '7.0',
+      # :device => 'iPad Air',
+
+      :'browserstack.debug' => 'true',
+      :name => 'WorldStores Test Suite'
+  }
+end
+
+# Defines BrowserStack Grid\HUB URL with the credentials from config.yml
+def browstack_url
+  'http://'+Helpers::Config['browstack_user']+':'+Helpers::Config['browstack_akey']+'@hub.browserstack.com/wd/hub'
+end
+
+# Registers driver for iPhone browser
+#TODO: support of iPhone browser by using either http://appium.io/ or http://ios-driver.github.io/ios-driver/
 
 World(Capybara)
 World(Laces)

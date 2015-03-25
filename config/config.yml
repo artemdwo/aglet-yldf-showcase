@@ -16,6 +16,9 @@ defaults: &execution_defaults
     # SauceLabs credentials
     sauce_user: sauce_username
     sauce_akey: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
+    # Browser Stack credentials
+    browstack_user: browstack_username
+    browstack_akey: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
 
 ##############################
 ###     Configurations     ###
