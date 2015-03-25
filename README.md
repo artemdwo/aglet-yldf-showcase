@@ -1,4 +1,6 @@
 [![Dependency Status](https://gemnasium.com/artemdwo/aglet.svg)](https://gemnasium.com/artemdwo/aglet)
+[![Code Climate](https://codeclimate.com/github/artemdwo/aglet/badges/gpa.svg)](https://codeclimate.com/github/artemdwo/aglet)
+[![Test Coverage](https://codeclimate.com/github/artemdwo/aglet/badges/coverage.svg)](https://codeclimate.com/github/artemdwo/aglet)
 
 # Aglet
 
