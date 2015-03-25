@@ -15,6 +15,7 @@
 /tmp/
 
 # Environmental exclusions:
+/.idea
 /.bundle/
 /lib/bundler/man/
 
