@@ -71,26 +71,25 @@ Capybara.register_driver :sauce do |app|
   )
 end
 
-# TODO: move configuration parts into separate config file
 # Capabilities for Sauce Labs service
 def sauce_capabilities
   {
-      :username => Helpers::Config['sauce_user'],
-      :accessKey => Helpers::Config['sauce_akey'],
-      :screenResolution => '1280x1024',
-      :platform => 'OS X 10.6',
-      :browserName => 'chrome',
-      :browserVersion => '35',
-      :jobName => 'New job'
+      :username => Helpers::Remote['sauce_config']['sauce_user'],
+      :accessKey => Helpers::Remote['sauce_config']['sauce_akey'],
+      :screenResolution => Helpers::Remote['sauce_config']['screenResolution'],
+      :platform => Helpers::Remote['sauce_config']['platform'],
+      :browserName => Helpers::Remote['sauce_config']['browserName'],
+      :browserVersion => Helpers::Remote['sauce_config']['browserVersion'],
+      :jobName => Helpers::Remote['sauce_config']['jobName']
   }
 end
 
 # Defines Sauce Labs Grid\HUB URL with the credentials from config.yml
 def sauce_url
-  'http://'+Helpers::Config['sauce_user']+':'+Helpers::Config['sauce_akey']+'@ondemand.saucelabs.com:80/wd/hub'
+  'http://'+Helpers::Remote['sauce_config']['sauce_user']+':'+Helpers::Remote['sauce_config']['sauce_akey']+'@ondemand.saucelabs.com:80/wd/hub'
 end
 
-# Registers driver for Browser Stack remote hub
+# Desktop - Registers driver for Browser Stack remote hub
 Capybara.register_driver :browstack do |app|
   Capybara::Selenium::Driver.new(app,
                                  :browser => :remote,
@@ -99,36 +98,60 @@ Capybara.register_driver :browstack do |app|
   )
 end
 
-# TODO: move configuration parts into separate config file
-# Capabilities for Browser Stack service
+# Desktop - Capabilities for Browser Stack service
 def browstack_capabilities
   {
-      # Desktop emulation Win+IE
-      :browser => 'IE',
-      :browser_version => '7.0',
-      :os => 'Windows',
-      :os_version => 'XP',
-
-      # Desktop emulation MacOS+Chrome
-      # :browser => 'Chrome',
-      # :browser_version => '35',
-      # :os => 'OS X',
-      # :os_version => 'Mountain Lion',
-      # :os_version => 'Snow Leopard',
-
-      # Mobile Devices
-      # :os => 'ios',
-      # :os_version => '7.0',
-      # :device => 'iPad Air',
-
-      :'browserstack.debug' => 'true',
-      :name => 'WorldStores Test Suite'
+      # Desktop Configuration
+      :os => Helpers::Remote['browstack_config']['os'],
+      :os_version => Helpers::Remote['browstack_config']['os_ver'],
+      :browser => Helpers::Remote['browstack_config']['browser'],
+      :browser_version =>  Helpers::Remote['browstack_config']['browser_ver'],
+      :resolution => Helpers::Remote['browstack_config']['resolution'],
+      :project => Helpers::Remote['browstack_config']['project'],
+      :build => Helpers::Remote['browstack_config']['build'],
+      :name => Helpers::Remote['browstack_config']['name'],
+      :'browserstack.debug' => Helpers::Remote['browstack_config']['debug']
   }
 end
 
+# TODO: BrowserStack Driver for Mobile device
+# Mobile Devices - Registers driver for Browser Stack remote hub
+# Capybara.register_driver :browstack_mob do |app|
+#   Capybara::Selenium::Driver.new(app,
+#                                  :browser => :remote,
+#                                  :desired_capabilities => browstack_mob_capabilities,
+#                                  :url => browstack_url
+#   )
+# end
+# TODO: BrowserStack Capabilities for Mobile device
+# Mobile Devices - Capabilities for Browser Stack service
+# def browstack_mob_capabilities
+#   {
+#       # Mobile Devices Configuration
+#   }
+# end
+
 # Defines BrowserStack Grid\HUB URL with the credentials from config.yml
 def browstack_url
-  'http://'+Helpers::Config['browstack_user']+':'+Helpers::Config['browstack_akey']+'@hub.browserstack.com/wd/hub'
+  'http://'+Helpers::Remote['browstack_config']['browstack_user']+':'+Helpers::Remote['browstack_config']['browstack_akey']+'@hub.browserstack.com/wd/hub'
+end
+
+# Registers driver for Remote hub
+Capybara.register_driver :hub do |app|
+  Capybara::Selenium::Driver.new(app,
+                                 :browser => :remote,
+                                 :desired_capabilities => hub_capabilities,
+                                 :url => Helpers::Remote['hub_config']['hub_url']
+  )
+end
+
+# Capabilities for Grid service
+def hub_capabilities
+  {
+      :platform => Helpers::Remote['hub_config']['platform'],
+      :browserName => Helpers::Remote['hub_config']['browserName'],
+      :version => Helpers::Remote['hub_config']['version']
+  }
 end
 
 # Registers driver for iPhone browser
