@@ -2,41 +2,33 @@
 ### Configuration defaults ###
 ##############################
 defaults: &execution_defaults
-    # Default Configuration to run (Environment)
-    default_config: default_env
-    # URL of grid to run tests remotely/in parallel
-    grid_url: 'http://127.0.0.1:4444/wd/hub'
-    # Default TimeOuts for tests (sec).
-    # You can add any timeouts and use them within tests anywhere you need.
-    # Add method(s) into ../aglet/ext/laces.rb to be able
-    # to retrieve this value(s) within tests afterwords.
-    ajax_timeout: 10
-    front_timeout: 30
-    back_timeout: 30
-    # SauceLabs credentials
-    sauce_user: sauce_username
-    sauce_akey: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
-    # Browser Stack credentials
-    browstack_user: browstack_username
-    browstack_akey: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
+  # Default Configuration to run (Environment)
+  default_config: 'default_env'
+  # Default TimeOuts for tests (sec).
+  # You can add any timeouts and use them within tests anywhere you need.
+  # Add method(s) into ../aglet/ext/laces.rb to be able
+  # to retrieve this value(s) within tests afterwards.
+  ajax_timeout: '10'
+  front_timeout: '30'
+  back_timeout: '30'
 
 ##############################
-###     Configurations     ###
+###   Environment Config   ###
 ##############################
 default_env:
-    <<: *execution_defaults
-    language_id: INT
-    default_wait_time: 2
-    site_root: http://www.google.com
+  <<: *execution_defaults
+  language_id: INT
+  default_wait_time: '2'
+  site_root: http://www.google.com
 
 ##############################
 ### Configuration Template ###
 ##############################
 #environment_name:
-#    <<: *execution_defaults
-#    # Website Name / Language ID
-#    language_id: USA
-#    #Capybara Default TimeOut
-#    default_wait_time: 2
-#    #URL
-#    site_root: http://www.something.com
+#  <<: *execution_defaults
+#  # Website Name / Language ID
+#  language_id: USA
+#  #Capybara Default TimeOut
+#  default_wait_time: 2
+#  #URL
+#  site_root: http://www.something.com
