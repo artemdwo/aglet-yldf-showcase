@@ -1,4 +1,5 @@
 # Var Suites to exec
+all: -f pretty
 complete: -f pretty -t @complete -t ~@not_implemented -t ~@failing
 failing: -f pretty -t @complete -t @failing
 complete_no_failing: -f pretty -t @complete -t ~@failing
