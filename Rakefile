@@ -1,7 +1,6 @@
 require 'cucumber/rake/task'
 require 'rspec/core/rake_task'
 require 'yaml'
-require 'selenium/rake/server_task'
 
 desc 'CUKE Namespace'
 namespace :cuke do
