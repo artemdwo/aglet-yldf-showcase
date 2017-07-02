@@ -19,6 +19,14 @@ Grab a copy
 git clone https://github.com/artemdwo/aglet.git
 ```
 ## How to run ?
+
+Ensure you have following installed:
+ - **Ruby** _2.2.0+_ (use `rvm`)
+ - **Bundler** _latest_ (`gem install bundler`)
+ - **Selenium WebDriver** _latest_ (http://docs.seleniumhq.org/download/)
+ - **Chromedriver** _latest_ - to run Google Chrome (`$ brew install chromedriver`)
+ - **Geckodriver** _latest_ - to run Firefox (`$ brew install geckodriver`)
+
 ### List of available Rake Tasks
 Check what's already available
 ```bash
@@ -29,6 +37,11 @@ Run `RAKE_TASK`
 ```bash
 # rake cuke:[RAKE_TASK]
 ```
+
+**RAKE_TASK** available from:
+ - `$ rake -T`
+ - config/cucumber.yml
+
 #### Example: @smoke suite
 Run `smoke` predefined suite
 ```bash
@@ -46,11 +59,18 @@ To run tests under specific browser
 # ... BROWSER=browser_alias
 ```
 
+**browser_alias**:
+ - _selenium_chrome_ for Google Chrome
+ - _selenium_firefox_ for Firefoz
+
 To run tests against specific environment
 
 ```bash
 # ... CONFIG=environment_alias
 ```
+
+See config/config.yml, for example _default_env_, _environment_name_
+
 ### Reporting
 Test reports in JSON format:
 

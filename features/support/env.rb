@@ -17,10 +17,11 @@ require './ext/timer'
 require 'capybara/iphone'
 require 'capybara/user_agent'
 
-require "sauce"
-require "sauce/capybara"
-require "capybara/rspec"
-require "sauce/cucumber"
+# TODO: update SauceLabs support
+# require "sauce"
+# require "sauce/capybara"
+# require "capybara/rspec"
+# require "sauce/cucumber"
 
 # Sets the Timezone
 Time.zone = 'Europe/London'
@@ -63,31 +64,31 @@ Capybara.register_driver :selenium_safari do |app|
 end
 
 # Registers driver for Sauce Labs remote hub
-Capybara.register_driver :sauce do |app|
-  Capybara::Selenium::Driver.new(app,
-                                 :browser => :remote,
-                                 :desired_capabilities => sauce_capabilities,
-                                 :url => sauce_url
-  )
-end
+# Capybara.register_driver :sauce do |app|
+#   Capybara::Selenium::Driver.new(app,
+#                                  :browser => :remote,
+#                                  :desired_capabilities => sauce_capabilities,
+#                                  :url => sauce_url
+#   )
+# end
 
 # Capabilities for Sauce Labs service
-def sauce_capabilities
-  {
-      :username => Helpers::Remote['sauce_config']['sauce_user'],
-      :accessKey => Helpers::Remote['sauce_config']['sauce_akey'],
-      :screenResolution => Helpers::Remote['sauce_config']['screenResolution'],
-      :platform => Helpers::Remote['sauce_config']['platform'],
-      :browserName => Helpers::Remote['sauce_config']['browserName'],
-      :browserVersion => Helpers::Remote['sauce_config']['browserVersion'],
-      :jobName => Helpers::Remote['sauce_config']['jobName']
-  }
-end
+# def sauce_capabilities
+#   {
+#       :username => Helpers::Remote['sauce_config']['sauce_user'],
+#       :accessKey => Helpers::Remote['sauce_config']['sauce_akey'],
+#       :screenResolution => Helpers::Remote['sauce_config']['screenResolution'],
+#       :platform => Helpers::Remote['sauce_config']['platform'],
+#       :browserName => Helpers::Remote['sauce_config']['browserName'],
+#       :browserVersion => Helpers::Remote['sauce_config']['browserVersion'],
+#       :jobName => Helpers::Remote['sauce_config']['jobName']
+#   }
+# end
 
 # Defines Sauce Labs Grid\HUB URL with the credentials from config.yml
-def sauce_url
-  'http://'+Helpers::Remote['sauce_config']['sauce_user']+':'+Helpers::Remote['sauce_config']['sauce_akey']+'@ondemand.saucelabs.com:80/wd/hub'
-end
+# def sauce_url
+#   'http://'+Helpers::Remote['sauce_config']['sauce_user']+':'+Helpers::Remote['sauce_config']['sauce_akey']+'@ondemand.saucelabs.com:80/wd/hub'
+# end
 
 # Desktop - Registers driver for Browser Stack remote hub
 Capybara.register_driver :browstack do |app|
