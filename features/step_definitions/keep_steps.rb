@@ -49,9 +49,19 @@ Then /^I save the (Note|Reminder)$/ do |type|
 end
 
 And /^Verify created Note with Title:(.*?) and Content:(.*?)$/ do |title, content|
-  i=0
-  while (@aglet.keep_page.notes_title_list[i].text != title) && (@aglet.keep_page.notes_body_list[i].text != content) do
-    i+=1
+  i = 0
+  not_found = true
+
+  while @aglet.keep_page.notes_title_list[i] && @aglet.keep_page.notes_body_list[i] do
+    if (@aglet.keep_page.notes_title_list[i].text === title) && (@aglet.keep_page.notes_body_list[i].text === content)
+      not_found = false
+    else
+      i += 1
+    end
+  end
+
+  if not_found
+    raise "Could not find a Note with Title:#{title} and Content:#{content}"
   end
 end
 
