@@ -1,6 +1,8 @@
 #encoding: utf-8
 class Model::Domain::Content
 
-  attr_accessor :search_term
+  attr_accessor :login
+  attr_accessor :password
+  attr_accessor :host_to_match
 
 end
