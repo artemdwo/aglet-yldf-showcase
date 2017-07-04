@@ -5,12 +5,22 @@ class Model::Page::Keep < SitePrism::Page
   #CSS
 
   #XPath
-  element   :keep_hdr,        :xpath, ".//span[text()='Keep']"
-  element   :note_empty_fld,  :xpath, ".//div[(attribute::role='textbox') and not(contains(attribute::style,'background-color:')) and (attribute::contenteditable='true') or (attribute::spellcheck='true')]"
-  elements  :note_text_fld,   :xpath, ".//div[(attribute::role='textbox') and not(contains(attribute::style,'background-color:')) and (attribute::contenteditable='true') or (attribute::spellcheck='true')]"
-  element   :done_btn,        :xpath, ".//div[text()='Done']"
-  elements  :notes_title_list,:xpath, ".//div[(attribute::role='textbox') and (contains(attribute::style,'background-color:')) and (attribute::contenteditable='false')]"
-  elements  :notes_body_list, :xpath, ".//div[(attribute::role='textbox') and not(contains(attribute::style,'background-color:')) and (attribute::contenteditable='false')]"
+  element   :keep_hdr,          :xpath, ".//span[text()='Keep']"
+  element   :note_empty_fld,    :xpath, ".//div[(attribute::role='textbox') and not(contains(attribute::style,'background-color:')) and (attribute::contenteditable='true') or (attribute::spellcheck='true')]"
+  elements  :note_text_fld,     :xpath, ".//div[(attribute::role='textbox') and not(contains(attribute::style,'background-color:')) and (attribute::contenteditable='true') or (attribute::spellcheck='true')]"
+  element   :done_btn,          :xpath, ".//div[text()='Done']"
+  elements  :notes_title_list,  :xpath, ".//div[(attribute::role='textbox') and (contains(attribute::style,'background-color:')) and (attribute::contenteditable='false')]"
+  elements  :notes_body_list,   :xpath, ".//div[(attribute::role='textbox') and not(contains(attribute::style,'background-color:')) and (attribute::contenteditable='false')]"
+  elements  :add_reminder_btn,  :xpath, ".//div[not(contains(attribute::style,'display: none'))]/div/div[attribute::aria-label='Remind me']"
+  elements  :collaborator_btn,  :xpath, ".//div[attribute::role='toolbar']/div[(attribute::role='button') and (attribute::aria-label='Collaborator')]"
+  elements  :change_colour_btn, :xpath, ".//div[attribute::role='toolbar']/div[(attribute::role='button') and (attribute::aria-label='Change color')]"
+
+  #Reminder menu
+  element   :remind_tonight_itm,    :xpath, ".//div[(attribute::gaid='tonightselected') and (attribute::role='menuitem')]"
+  element   :remind_tomorrow_itm,   :xpath, ".//div[(attribute::gaid='tomorrowmorningselected') and (attribute::role='menuitem')]"
+  element   :remind_next_week_itm,  :xpath, ".//div[(attribute::gaid='nextweekselected') and (attribute::role='menuitem')]"
+  element   :date_picker_item,      :xpath, ".//div[(attribute::role='menuitem')]/div/div[text()='Pick date & time']"
+  element   :place_picker_item,     :xpath, ".//div[(attribute::role='menuitem')]/div/div[text()='Pick place']"
 
   #First [0] element corresponds to empty Note title
   def note_title
@@ -22,4 +32,7 @@ class Model::Page::Keep < SitePrism::Page
     note_text_fld[1]
   end
 
+  def date_time_finder datetime
+    find(:xpath, ".//div[text()='#{datetime}']")
+  end
 end

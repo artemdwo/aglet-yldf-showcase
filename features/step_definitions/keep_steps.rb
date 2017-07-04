@@ -44,14 +44,22 @@ And /^Fill in Note content with (.*?)$/ do |content|
   @aglet.keep_page.note_content.set content
 end
 
-Then /^I save the Note$/ do
+Then /^I save the (Note|Reminder)$/ do |type|
   @aglet.keep_page.done_btn.click
 end
 
 And /^Verify created Note with Title:(.*?) and Content:(.*?)$/ do |title, content|
-
   i=0
   while (@aglet.keep_page.notes_title_list[i].text != title) && (@aglet.keep_page.notes_body_list[i].text != content) do
     i+=1
   end
+end
+
+And /^Set reminder to (.*?)$/ do |time|
+  @aglet.keep_page.add_reminder_btn.first.click
+  @aglet.keep_page.remind_tonight_itm.click
+end
+
+And /^Verify that date-time is (.*?)$/ do |datetime|
+  @aglet.keep_page.date_time_finder(datetime).present?
 end
