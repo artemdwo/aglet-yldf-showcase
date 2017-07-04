@@ -40,7 +40,7 @@ Capybara.configure do |config|
   config.default_driver = browser
   config.run_server = false
   config.default_selector = :css
-  config.default_wait_time = Helpers::Config['default_wait_time']
+  config.default_max_wait_time = (Helpers::Config['default_wait_time']).to_i
   config.ignore_hidden_elements = false
   config.visible_text_only = false
   config.match = :first

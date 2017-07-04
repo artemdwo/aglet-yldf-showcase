@@ -17,17 +17,17 @@ module Laces
 
   # Method passes _ajax_timeout_ value from config.yml to all tests
   def ajax_timeout
-    Helpers::Config['ajax_timeout']
+    (Helpers::Config['ajax_timeout']).to_i
   end
 
   # Method passes _front_timeout_ value from config.yml to all tests
   def front_timeout
-    Helpers::Config['front_timeout']
+    (Helpers::Config['front_timeout']).to_i
   end
 
   # Method passes _back_timeout_ value from config.yml to all tests
   def back_timeout
-    Helpers::Config['back_timeout']
+    (Helpers::Config['back_timeout']).to_i
   end
 
   # Method does scroll to the TOP of the page
