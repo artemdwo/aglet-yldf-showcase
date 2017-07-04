@@ -19,7 +19,7 @@ default_env:
   <<: *execution_defaults
   language_id: INT
   default_wait_time: '2'
-  site_root: http://www.google.com
+  site_root: http://www.keep.google.com
 
 ##############################
 ### Configuration Template ###
