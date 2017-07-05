@@ -2,23 +2,38 @@
 [![Code Climate](https://codeclimate.com/github/artemdwo/aglet/badges/gpa.svg)](https://codeclimate.com/github/artemdwo/aglet)
 [![Test Coverage](https://codeclimate.com/github/artemdwo/aglet/badges/coverage.svg)](https://codeclimate.com/github/artemdwo/aglet)
 
-# Aglet
+# Aglet showcase
 
 **Aglet** is Cucumber-based test automation framework [kind of all-in-one]
 
-## Audience
-**Aglet** especially for you, if you're:
-
- - interesting in quality of your project
- - looking for something simple to follow BDD approach
- - not going to create testing tool from scratch
- 
 ## How to start?
 Grab a copy
 ```bash
 git clone https://github.com/artemdwo/aglet.git
 ```
-## How to run ?
+
+## What's inside?
+### Configuration
+
+`../config/config.yml` - Contains range of default `timeouts` and `environment configurations` where `site_root` (aka `base_url`) is defined.
+### Features and Step Definitions
+
+`../features/*.feature` - each `*.feature` file contains a range of `Scenarios` (aka `Test Cases`) describing expected behaviour and assertions in **Behavioural** format (supporting **BDD**).
+
+[Google Keep Scenarios](https://github.com/artemdwo/aglet-yldf-showcase/blob/master/features/keep.feature)
+
+`../features/step_definitions/*_steps.rb` - each `*_steps.rb ` file contains background scripting (coding) of the `Steps` that comprise `Scenarios`, which transform `Behaviour` into `Action`. That's the place where **magic** happens.
+### Page Object Models and content
+
+`../lib/model/domain/*_details.rb` - content (test data) container classes
+
+`../lib/model/page/*.rb` -  page object models (elements and methods)
+
+`../lib/model/section/*.rb` - page object models (elements and methods) of repetitive blocks to prevent duplication across pages
+
+`../lib/model/aglet.rb` - project object that combines everything together
+
+## How to run?
 
 Ensure you have following installed:
  - **Ruby** _2.2.0+_ (use `rvm`)
