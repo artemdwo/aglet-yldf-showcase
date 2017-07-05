@@ -1,5 +1,5 @@
 # Var Suites to exec
-all: -f pretty --tags ~@wip
+all: -f pretty -t ~@not_implemented
 complete: -f pretty -t @complete -t ~@not_implemented -t ~@failing
 failing: -f pretty -t @complete -t @failing
 complete_no_failing: -f pretty -t @complete -t ~@failing
