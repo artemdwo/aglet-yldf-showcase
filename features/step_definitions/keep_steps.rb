@@ -1,10 +1,11 @@
 #!/bin/env ruby
 # encoding: utf-8
 
-Given /^I am on the Account Login page$/ do
+Given /^I open Google Keep web app$/ do
   @aglet = Model::Aglet.new
-  @aglet.account_login_page.load
   @login_details ||= Model::Domain::LoginDetails.new
+  @keep_details ||= Model::Domain::KeepDetails.new
+  @aglet.keep_page.load
 end
 
 When /^Enter login$/ do
@@ -20,18 +21,18 @@ When /^Submit login details$/ do
   @aglet.account_login_page.submit_btn.click
 end
 
-Given /^I open Google Keep web app$/ do
+And /^I go to Google Keep web app$/ do
   @aglet.keep_page.load
-  @keep_details ||= Model::Domain::KeepDetails.new
-  Timeout.timeout(front_timeout) { sleep(0.1) until @aglet.keep_page.keep_hdr.present? }
 end
 
 Then /^I am on Main Google Keep page$/ do
   expect(@aglet.keep_page.current_url).to include @keep_details.host_to_match
+  Timeout.timeout(front_timeout) { sleep(0.1) until @aglet.keep_page.keep_hdr.present? }
 end
 
-When /^I select Note template$/ do
+When /^I select Note form$/ do
   @aglet.keep_page.note_empty_fld.click
+  sleep 1
 end
 
 And /^Fill in Title with (.*?)$/ do |title|
@@ -61,7 +62,11 @@ end
 
 And /^Set reminder to (.*?)$/ do |time|
   @aglet.keep_page.add_reminder_btn.first.click
-  @aglet.keep_page.remind_tonight_itm.click
+  if @aglet.keep_page.remind_tonight_itm.visible?
+    @aglet.keep_page.remind_tonight_itm.click
+  else
+    @aglet.keep_page.remind_tomorrow_itm.click
+  end
 end
 
 And /^Verify that date-time is (.*?)$/ do |datetime|
@@ -105,6 +110,7 @@ And /^I (archive|unarchive|delete|evaporate|delete all) the Note$/ do |action|
     when "evaporate"
       # To skip 0,1 indexes that corresponds to Note form and top nav menu
       i = @search_index + 2
+      @aglet.keep_page.more_menu_btn[i].hover
       @aglet.keep_page.more_menu_btn[i].click
       @aglet.keep_page.delete_forever.click
       @aglet.keep_page.delete_confim_btn.click
@@ -148,11 +154,21 @@ And /^I go to (.*?) tab$/ do |location|
   sleep 1
 end
 
+#TODO: Look into 'Select Note' deeper.
 Then /^I select all available Notes$/ do
-  count = @aglet.keep_page.notes_title_list.length-1
-  for i in 1..count
-    @aglet.keep_page.select_note_btn[i].hover
-    @aglet.keep_page.select_note_btn[i].click
+
+  @aglet.keep_page.list_view_btn.click
+
+  i = 0
+
+  while  @aglet.keep_page.select_note_btn[i]
+    if @aglet.keep_page.select_note_btn[i].visible?
+      @aglet.keep_page.select_note_btn[i].hover
+      @aglet.keep_page.select_note_btn[i].click
+      i += 1
+    else
+      i += 1
+    end
   end
 end
 
@@ -161,9 +177,10 @@ Then /^Empty the Trash$/ do
   @aglet.keep_page.empty_confim_btn.click
 end
 
+# Checks for leftovers in the Trash and posts a Warning
 Then /^Empty Trash link should disappear$/ do
   if @aglet.keep_page.empty_trash_lnk.visible?
-    raise "Hmmm... There is something left in the Trash!"
+    warn "Hmmm... There is something left in the Trash!"
   end
 end
 

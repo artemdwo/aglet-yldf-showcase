@@ -22,6 +22,9 @@ class Model::Page::Keep < SitePrism::Page
   elements  :select_note_btn,   :xpath, ".//div[(attribute::role='button') and (attribute::aria-label='Select note')]"
   element   :empty_confim_btn,  :xpath, ".//div[(attribute::role='button') and (text()='Empty Trash')]"
 
+  #Top Navigation
+  element   :list_view_btn,     :xpath, ".//div[(attribute::role='button') and (attribute::aria-label='List View')]"
+
   #Reminder menu
   element   :remind_tonight_itm,    :xpath, ".//div[(attribute::gaid='tonightselected') and (attribute::role='menuitem')]"
   element   :remind_tomorrow_itm,   :xpath, ".//div[(attribute::gaid='tomorrowmorningselected') and (attribute::role='menuitem')]"
